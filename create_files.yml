@@ -1,0 +1,14 @@
+---
+- name: createing files 
+  hosts: all
+  become: true
+  gather_facts: no
+ 
+  tasks:
+  - name: creating files using file module
+    file:
+      path: /home/ansible/new_file.txt
+      state: touch
+      owner: ansible
+      mode: 0777
+  

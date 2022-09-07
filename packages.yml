@@ -1,0 +1,10 @@
+---
+- name: installing packages
+  become: true
+  hosts: all
+  gather_facts: no
+  tasks:
+  - name: installing telnet package
+    yum:
+      name: telnet
+     

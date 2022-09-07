@@ -1,0 +1,11 @@
+---
+- name: install packages
+  hosts: all
+  become: true
+  gather_facts: yes
+
+  tasks:
+  - name: removing multiple packages
+    yum:
+      name: ['git', 'wget', 'telnet']
+      state: absent

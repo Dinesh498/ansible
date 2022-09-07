@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  gather_facts: no 
+  tasks:
+  - name: creating user with name playbookuser
+    user: 
+      name: plabookuser
+
