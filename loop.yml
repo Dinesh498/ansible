@@ -1,0 +1,13 @@
+---
+- name: using loop module
+  become: true
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+  - name: going to install packages
+    yum:
+      name: "{{ item.pkg }}"
+      state: "{{ item.setup }}"
+    loop:
+        - { pkg: 'git', setup: 'installed' }
