@@ -1,0 +1,48 @@
+---
+- name: conditions in playbook
+  hosts: all
+  gather_facts: yes
+  become: true
+#  vars:
+#    tomcat_pkg:     
+  vars_files:
+    - /home/ansible/playbooks/vars.txt
+# we can give file name diectly if var file is in the same path
+  tasks: 
+  - name: install java
+    yum:
+      name: java
+      state: installed  
+
+
+  - name: download apache tomcat
+    get_url:
+      url: httpd
+      dest: /opt
+  - name: extracting packages
+    unarchive:
+      src:
+      dest:
+      remote_src: yes
+
+  - name: change permission of the tomcat files and dir
+    src:
+    mode: 0755
+    recurse: yes
+
+  - name: linking the files
+    file:
+      src: /opt/{{tomcat_pkg}}/bin/{{item.tomcat_path}}
+      dest: /usr/local/bin/{{ item.tomcat_command }}
+      state: link
+   
+    loop:
+      - { tomcat_path: 'startup.sh', tomcat_command: tomcatup }
+      - { tomcat_path: 'shutdown.sh', tomcat_command: tomcatdown }
+      
+
+  - name: start the service
+    command: nohup ./startup.sh
+    args:
+      chdir: /opt/{{ tomcat_pkg }}/bin
+      

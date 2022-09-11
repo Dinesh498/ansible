@@ -1,0 +1,2 @@
+tomcat_url: "urlfor tomct to download"
+tomcat_pkg: "apache-tomcat-package name"

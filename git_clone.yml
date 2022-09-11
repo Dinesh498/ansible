@@ -1,0 +1,13 @@
+---
+- name: cloning the vault repo from git
+  hosts: all
+  gather_facts: no
+  vars_files:
+    - /home/ansible/github_key
+ 
+  tasks:
+  - name: going to clone the repo
+    git:    
+      repo: https://Dinesh498:{{ vault_pass }}@github.com/Dinesh498/VaultTest.git
+      dest: /home/ansible/ansible_vault
+

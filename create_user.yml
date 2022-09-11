@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: true
+  gather_facts: no
+  vars:
+    user_name: modi
+  
+  tasks:
+    - name: creating user
+      user:
+        name: "{{user_name}}"
+        
+    - name: create directory
+      file:
+        path: /opt/"{{user_name}}"_temp_dir
+        state: directory
+        mode: 0755
+        owner: "{{user_name }}"
+        group:  "{{ user_name}}"
+  
