@@ -1,0 +1,25 @@
+---
+- name: checking text files  
+  hosts: all 
+  become: true
+  gather_facts: yes 
+  tasks:
+  - name: find all txt files in /tmp 
+    shell: 
+      "find /tmp -type f -name '*.txt'" 
+    register: find_output
+
+  - name: variable output
+    debug:
+      var: find_output
+
+  - name: Add tomcat into suders file to start/stop service
+    lineinfile:
+      dest: /etc/sudoers
+      regexp: '^tomcat'
+      line: 'tomcat ALL=NOPASSWD: /etc/init.d/tomcatFCSKY kill,/etc/init.d/tomcatFCSKY restart,/etc/init.d/tomcatFCSKY stop'
+
+  - name: Time Before tomcat restart
+    shell: "date +%s"
+    register: command_output
+  - debug: msg="{{ lookup('pipe','date +%H:%M:%S') }}"
